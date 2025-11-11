@@ -1,0 +1,4 @@
+*.o
+libasm.a
+test
+.vscode
