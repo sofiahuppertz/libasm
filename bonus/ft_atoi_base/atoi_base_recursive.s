@@ -13,57 +13,66 @@ _recursive_atoi:
     cmp     byte[rsi], 0
     je      .ret_zero
 
-    push    rdi
-    push    rsi
-    call    _ft_strlen  ; rax contains the len of base
+    push    rbx
+    push    r12
 
+    mov     rbx, rdi            ; rbx = base
+    mov     r12, rsi            ; r12 = str
+
+    call    _ft_strlen
+    push    r13
+    mov     r13, rax            ; r13= base_len
+
+    mov     rsi, r12
     cmp     byte[rsi + 1], 0
-    je      .base_case
+    jne     .recurse_case
 
-    ; truncate last digit
-    mov rdx, rsi
+    mov     dil, byte[rsi]
+    mov     rsi, rbx
+    call    _get_digit_value
+
+    pop     r13
+    pop     r12
+    pop     rbx
+
+    ret
+
+.recurse_case:
+    mov rdx, r12
 
 .find_end:
     cmp     byte[rdx + 1], 0
-    je      .done
+    je      .have_end
     inc     rdx
     jmp     .find_end
 
-.done
-    mov     r8b, byte[rdx] ; temporarily truncate
+.have_end:
+    push    r14
+    movzx     r14, byte[rdx]
     mov     byte[rdx], 0
-    pop      rsi
-    pop      rdi
-    push     r8b ; last char of str
-    push     rdi;
-    push     rax ; base lenght
 
-
+    mov     rdi, rbx
+    mov     rsi, r12
     call    _recursive_atoi
-    pop rdi
-    mul rax, rdi
-    pop rsi
-    pop rdi
-    push rax
 
-    call _get_digit_value
-    pop rsi
-    add rax, rsi
+    imul    r13, rax
+    mov     byte[rdx], r14
 
-    ret
+    mov     dil, r14
+    mov     rsi, rbx
+    call    _get_digit_value
 
-.base_case:
-    call _get_digit_value
+    add     rax, r13
+
+    pop     r14
+    pop     r13
+    pop     r12
+    pop     rbx
     ret
 
 .ret_zero:
-    xor eax, eax
+    xor     eax, eax
     ret
-
-
-
-
-
 
 
 
