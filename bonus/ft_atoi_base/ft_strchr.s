@@ -13,6 +13,7 @@ _ft_strchr:
     cmp dl, 0
     je .not_found
 
+    inc rax             ; advance to next character
     jmp .find_char
 
 .found:

@@ -1,7 +1,7 @@
 global _ft_write
 extern ___error
 
-| jc = jump if carry
+;jc = jump if carry
 
 section .text
 
