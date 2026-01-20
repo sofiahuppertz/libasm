@@ -33,11 +33,11 @@ CC          := arch -x86_64 cc
 CFLAGS      := -I.
 LDFLAGS     := -L.
 LDLIBS      := -lasm
-TEST_BIN    := test
+TEST_BIN    := test_mandatory
 TEST_ATOI   := test_atoi_base
-TEST_LIST   := test_list
+TEST_BONUS  := test_bonus
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus run_test run_bonus run_all
 
 all: $(NAME)
 
@@ -53,19 +53,27 @@ bonus: $(OBJS) $(BONUS_OBJS)
 	$(NASM) $(NASMFLAGS) -o $@ $<
 
 $(TEST_BIN): $(NAME) tests/test_mandatory.c
-	$(CC) tests/test_mandatory.c $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
+	$(CC) tests/test_mandatory.c $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(TEST_BIN)
 
 $(TEST_ATOI): bonus tests/test_atoi_base.c
 	$(CC) tests/test_atoi_base.c $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
 
-$(TEST_LIST): bonus tests/test_list.c
-	$(CC) tests/test_list.c $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
+$(TEST_BONUS): bonus tests/test_bonus.c
+	$(CC) tests/test_bonus.c $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@
 
 clean:
 	$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME) $(TEST_BIN) $(TEST_ATOI) $(TEST_LIST)
+	$(RM) $(NAME) $(TEST_BIN) $(TEST_ATOI) $(TEST_BONUS)
 
 re: fclean all
+
+run_test: $(TEST_BIN)
+	./$(TEST_BIN)
+
+run_bonus: $(TEST_BONUS)
+	./$(TEST_BONUS)
+
+run_all: run_test run_bonus
 
