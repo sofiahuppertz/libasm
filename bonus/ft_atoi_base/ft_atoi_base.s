@@ -1,10 +1,10 @@
-global _ft_atoi_base
+global ft_atoi_base
 
-extern  _ft_strlen
-extern  _ft_strchr
-extern  _has_duplicates
-extern  _ft_iswhitespace
-extern  _recursive_atoi
+extern  ft_strlen
+extern  ft_strchr
+extern  has_duplicates
+extern  ft_iswhitespace
+extern  recursive_atoi
 
 section .text
 
@@ -16,7 +16,7 @@ section .text
 ;   rax = converted integer, or 0 if invalid
 ; Callee-saved registers used: rbx, r12, r13, r14
 
-_ft_atoi_base:
+ft_atoi_base:
     ; Save callee-saved registers
     push    rbx
     push    r12
@@ -30,27 +30,27 @@ _ft_atoi_base:
 
     ; if (ft_strlen(base) < 2) return 0
     mov     rdi, r12
-    call    _ft_strlen
+    call    ft_strlen
     cmp     rax, 2
     jb      .ret_zero
 
     ; if (ft_strchr(base, '-')) return 0 (base can't contain sign chars)
     mov     rdi, r12
     mov     rsi, '-'
-    call    _ft_strchr
+    call    ft_strchr
     test    rax, rax
     jnz     .ret_zero
 
     ; if (ft_strchr(base, '+')) return 0
     mov     rdi, r12
     mov     rsi, '+'
-    call    _ft_strchr
+    call    ft_strchr
     test    rax, rax
     jnz     .ret_zero
 
     ; if (has_duplicates(base)) return 0 (each digit must be unique)
     mov     rdi, r12
-    call    _has_duplicates
+    call    has_duplicates
     test    rax, rax
     jnz     .ret_zero
 
@@ -69,7 +69,7 @@ _ft_atoi_base:
 
     ; Check for whitespace
     movzx   edi, byte[rbx]
-    call    _ft_iswhitespace
+    call    ft_iswhitespace
     test    rax, rax
     jnz     .increase_and_loop
 
@@ -85,7 +85,7 @@ _ft_atoi_base:
     ; Check if current char exists in base
     mov     rdi, r12            ; base
     movzx   esi, byte[r14]      ; current character
-    call    _ft_strchr
+    call    ft_strchr
     test    rax, rax
     jz      .ret_zero           ; char not in base = invalid
 
@@ -97,7 +97,7 @@ _ft_atoi_base:
 .str_is_valid:
     mov     rdi, r12            ; base
     mov     rsi, rbx            ; str (after whitespace/signs)
-    call    _recursive_atoi
+    call    recursive_atoi
     imul    rax, r13            ; apply sign: result = number * sign
 
 .done:

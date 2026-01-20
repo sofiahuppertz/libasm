@@ -1,16 +1,18 @@
-global _ft_read
-extern ___error
+global ft_read
+extern __errno_location
 
 section .text
 
-_ft_read:
-    mov rax, 0x2000003 ; SYS_READ
+ft_read:
+    mov rax, 0         ; SYS_READ for Linux
     syscall
-    jc .error
+    cmp rax, 0
+    jl .error
     ret
 .error:
-    mov r8, rax
-    call ___error
-    mov [rax], r8
-    mov rax, -1
+    neg rax            ; Make error positive
+    mov r8, rax        ; Save error code
+    call __errno_location wrt ..plt
+    mov [rax], r8      ; Set errno
+    mov rax, -1        ; Return -1
     ret

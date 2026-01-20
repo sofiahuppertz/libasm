@@ -2,3 +2,4 @@
 libasm.a
 test
 .vscode
+test_*

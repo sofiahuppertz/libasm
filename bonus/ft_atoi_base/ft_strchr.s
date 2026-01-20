@@ -1,8 +1,8 @@
-global _ft_strchr
+global ft_strchr
 
 section .text
 
-_ft_strchr:
+ft_strchr:
     mov rax, rdi
 
 .find_char:

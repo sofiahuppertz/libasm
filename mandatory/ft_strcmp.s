@@ -1,8 +1,8 @@
-global _ft_strcmp
+global ft_strcmp
 
 section .text
 
-_ft_strcmp:
+ft_strcmp:
 .loop:
     mov     al, [rdi]           ; al = *s1
     mov     cl, [rsi]           ; cl = *s2 (use cl, not bl - rbx is callee-saved!)

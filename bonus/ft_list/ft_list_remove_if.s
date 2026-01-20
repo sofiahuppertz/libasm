@@ -1,6 +1,6 @@
-global _ft_list_remove_if
+global ft_list_remove_if
 
-extern _free
+extern free
 
 section .text
 
@@ -22,7 +22,7 @@ section .text
 ;   r14 = free_fct function pointer
 ;   r15 = current node pointer
 
-_ft_list_remove_if:
+ft_list_remove_if:
     push    rbx
     push    r12
     push    r13
@@ -66,7 +66,7 @@ _ft_list_remove_if:
 
 .free_node:
     mov     rdi, r15            ; rdi = entry
-    call    _free               ; free(entry)
+    call    free               ; free(entry)
 
     jmp     .loop               ; check new *head_ptr (don't advance)
 

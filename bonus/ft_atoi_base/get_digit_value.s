@@ -1,11 +1,11 @@
-global _get_digit_value
+global get_digit_value
 
 section .text
 
 ; dil is the char
 ; rsi is the pointer to base str
 
-_get_digit_value:
+get_digit_value:
     mov rax, rsi
 
 .next_char:

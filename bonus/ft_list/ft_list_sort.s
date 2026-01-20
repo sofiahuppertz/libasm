@@ -1,4 +1,4 @@
-global _ft_list_sort
+global ft_list_sort
 
 section .text
 
@@ -22,7 +22,7 @@ section .text
 ;   r14 = next node pointer
 ;   r15 = swapped flag (0 = false, 1 = true)
 
-_ft_list_sort:
+ft_list_sort:
     ; Save callee-saved registers
     push    rbx
     push    r12

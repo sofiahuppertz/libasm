@@ -1,11 +1,11 @@
-global _has_duplicates
+global has_duplicates
 
 section .text
 
 ; rsp is the pointer to the array of seen (stack pointer)
 ; rdi is a ptr to str
 
-_has_duplicates:
+has_duplicates:
     ; allocate 256 bytes for seen[]
     sub rsp, 256
 

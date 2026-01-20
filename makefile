@@ -22,14 +22,14 @@ BONUS_SRCS  += bonus/ft_list/ft_list_push_front.s \
 BONUS_OBJS  := $(BONUS_SRCS:.s=.o)
 
 NASM        := nasm
-NASMFLAGS   := -f macho64
+NASMFLAGS   := -f elf64
 
 AR          := ar
 ARFLAGS     := rcs
 
 RM          := rm -f
 
-CC          := arch -x86_64 cc
+CC          := cc
 CFLAGS      := -I.
 LDFLAGS     := -L.
 LDLIBS      := -lasm

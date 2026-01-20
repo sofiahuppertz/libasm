@@ -1,8 +1,8 @@
-global _ft_iswhitespace
+global ft_iswhitespace
 
 section .text
 
-_ft_iswhitespace:
+ft_iswhitespace:
     cmp edi, 32
     je      .is_whitespace
     cmp edi, 9

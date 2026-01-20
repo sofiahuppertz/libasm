@@ -1,6 +1,6 @@
-global _ft_list_push_front
+global ft_list_push_front
 
-extern _malloc
+extern malloc
 
 section .text
 
@@ -16,7 +16,7 @@ section .text
 ;   offset 0:  data  (qword - 8 bytes)
 ;   offset 8:  next  (qword - 8 bytes)
 
-_ft_list_push_front:
+ft_list_push_front:
     ; Save callee-saved registers
     push    rbx
     push    r12
@@ -26,7 +26,7 @@ _ft_list_push_front:
 
     ; Allocate memory for new node
     mov     rdi, 16             ; sizeof(t_list) = 16 bytes
-    call    _malloc
+    call    malloc
     test    rax, rax
     jz      .malloc_fail        ; if malloc returned NULL, exit
 

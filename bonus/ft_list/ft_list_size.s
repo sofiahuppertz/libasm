@@ -1,4 +1,4 @@
-global _ft_list_size
+global ft_list_size
 
 
 ; Counts the number of nodes in a linked list
@@ -15,7 +15,7 @@ global _ft_list_size
 ;   offset 0:  data  (qword - 8 bytes)
 ;   offset 8:  next  (qword - 8 bytes)
 
-_ft_list_size:
+ft_list_size:
     xor     eax, eax ; count = 0
 
 .loop:

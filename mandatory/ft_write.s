@@ -1,18 +1,20 @@
-global _ft_write
-extern ___error
+global ft_write
+extern __errno_location
 
 ;jc = jump if carry
 
 section .text
 
-_ft_write:
-    mov rax, 0x2000004 ; SYS_WRITE 
+ft_write:
+    mov rax, 1         ; SYS_WRITE for Linux
     syscall
-    jc .error
+    cmp rax, 0
+    jl .error
     ret
 .error:
-    mov r8, rax
-    call ___error
-    mov [rax], r8
-    mov rax, -1
+    neg rax            ; Make error positive
+    mov r8, rax        ; Save error code
+    call __errno_location wrt ..plt
+    mov [rax], r8      ; Set errno
+    mov rax, -1        ; Return -1
     ret
