@@ -22,14 +22,20 @@ BONUS_SRCS  += bonus/ft_list/ft_list_push_front.s \
 BONUS_OBJS  := $(BONUS_SRCS:.s=.o)
 
 NASM        := nasm
-NASMFLAGS   := -f macho64
+
+UNAME_S     := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    NASMFLAGS := -f elf64
+    CC        := cc
+else
+    NASMFLAGS := -f macho64
+    CC        := arch -x86_64 cc
+endif
 
 AR          := ar
 ARFLAGS     := rcs
 
 RM          := rm -f
-
-CC          := arch -x86_64 cc
 CFLAGS      := -I.
 LDFLAGS     := -L.
 LDLIBS      := -lasm
@@ -37,7 +43,7 @@ TEST_BIN    := test_mandatory
 TEST_ATOI   := test_atoi_base
 TEST_BONUS  := test_bonus
 
-.PHONY: all clean fclean re bonus run_test run_bonus run_all
+.PHONY: all clean fclean re up bonus run_test run_tests run_bonus run_all
 
 all: $(NAME)
 
@@ -69,8 +75,12 @@ fclean: clean
 
 re: fclean all
 
+up: all
+
 run_test: $(TEST_BIN)
 	./$(TEST_BIN)
+
+run_tests: run_test
 
 run_bonus: $(TEST_BONUS)
 	./$(TEST_BONUS)
